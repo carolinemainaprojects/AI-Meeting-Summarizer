@@ -21,6 +21,7 @@ st.markdown(
 )
 
 st.divider()
+
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 st.subheader("📥 Add Your Meeting")
@@ -39,32 +40,40 @@ meeting_notes = st.text_area(
     placeholder="Example: Caroline will prepare the report by Friday..."
 )
 
-
-
 file_text = ""
 
 if uploaded_file is not None:
 
     if uploaded_file.type == "application/pdf":
+
         reader = PdfReader(uploaded_file)
+
         file_text = "\n".join(
             page.extract_text() or ""
             for page in reader.pages
         )
 
     elif uploaded_file.type == "text/plain":
+
         file_text = uploaded_file.read().decode("utf-8")
 
+
 if file_text.strip():
+
     final_notes = file_text
+
 else:
+
     final_notes = meeting_notes
+
 
 if st.button("✨ Summarize Meeting"):
 
     if not final_notes.strip():
 
-        st.warning("Please upload a file or paste meeting notes first.")
+        st.warning(
+            "Please upload a file or paste meeting notes first."
+        )
 
     else:
 
@@ -77,10 +86,12 @@ Return ONLY valid JSON using exactly this structure:
 
 {{
   "summary": "A concise summary of the meeting",
+
   "decisions": [
     "Decision 1",
     "Decision 2"
   ],
+
   "action_items": [
     {{
       "task": "Task description",
@@ -88,9 +99,11 @@ Return ONLY valid JSON using exactly this structure:
       "deadline": "Deadline"
     }}
   ],
+
   "deadlines": [
     "Important deadline or date"
   ],
+
   "people_responsible": [
     "Person and their responsibility"
   ]
@@ -114,42 +127,98 @@ Meeting notes:
 
             result = json.loads(response.text)
 
-            st.success("Meeting successfully summarized! 🎉")
+            st.success(
+                "Meeting successfully summarized! 🎉"
+            )
 
             st.subheader("📋 Meeting Summary")
+
             st.write(result["summary"])
 
             st.subheader("✅ Key Decisions")
 
-            for decision in result["decisions"]:
-                st.write(f"• {decision}")
+            if result["decisions"]:
+
+                for decision in result["decisions"]:
+
+                    st.write(f"• {decision}")
+
+            else:
+
+                st.info("No key decisions were identified.")
+
 
             st.subheader("📝 Action Items")
-st.subheader("📝 Action Items")
 
-if result["action_items"]:
+            if result["action_items"]:
 
-    for number, item in enumerate(result["action_items"], start=1):
+                for number, item in enumerate(
+                    result["action_items"],
+                    start=1
+                ):
 
-        with st.container(border=True):
+                    with st.container(border=True):
 
-            st.markdown(f"### Task {number}")
+                        st.markdown(
+                            f"### Task {number}"
+                        )
 
-            st.write(f"**Task:** {item['task']}")
-            st.write(f"**👤 Responsible:** {item['person']}")
-            st.write(f"**📅 Deadline:** {item['deadline']}")
+                        st.write(
+                            f"**Task:** {item['task']}"
+                        )
 
-else:
-    st.info("No action items were identified.")
+                        st.write(
+                            f"**👤 Responsible:** "
+                            f"{item['person']}"
+                        )
+
+                        st.write(
+                            f"**📅 Deadline:** "
+                            f"{item['deadline']}"
+                        )
+
+            else:
+
+                st.info(
+                    "No action items were identified."
+                )
+
+
             st.subheader("📅 Important Deadlines")
 
-            for deadline in result["deadlines"]:
-                st.write(f"• {deadline}")
+            if result["deadlines"]:
+
+                for deadline in result["deadlines"]:
+
+                    st.write(
+                        f"• {deadline}"
+                    )
+
+            else:
+
+                st.info(
+                    "No important deadlines were identified."
+                )
+
 
             st.subheader("👤 People Responsible")
 
-            for person in result["people_responsible"]:
-                st.write(f"• {person}")
+            if result["people_responsible"]:
+
+                for person in result[
+                    "people_responsible"
+                ]:
+
+                    st.write(
+                        f"• {person}"
+                    )
+
+            else:
+
+                st.info(
+                    "No responsible people were identified."
+                )
+
 
             download_text = f"""
 AI MEETING SUMMARY
