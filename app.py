@@ -9,8 +9,18 @@ st.set_page_config(
 )
 
 st.title("🤖 AI Meeting Summarizer")
-st.write("Turn meeting notes or transcripts into a clear, organized summary.")
 
+st.markdown(
+    """
+    ### Turn long meetings into clear, actionable insights.
+
+    Upload a meeting transcript or paste your notes below.
+    Get an AI-powered summary, decisions, action items, deadlines,
+    and responsible team members in seconds.
+    """
+)
+
+st.divider()
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 uploaded_file = st.file_uploader(
