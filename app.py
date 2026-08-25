@@ -92,4 +92,13 @@ Meeting notes:
 
         st.success("Meeting successfully summarized! 🎉")
 
-        st.markdown(response.text)
+result = response.text
+
+st.markdown(result)
+
+st.download_button(
+    label="📥 Download Meeting Summary",
+    data=result,
+    file_name="meeting_summary.txt",
+    mime="text/plain"
+)
