@@ -1,6 +1,7 @@
 import streamlit as st
 from google import genai
 from pypdf import PdfReader
+import json
 
 st.set_page_config(
     page_title="AI Meeting Summarizer",
@@ -53,24 +54,32 @@ if st.button("✨ Summarize Meeting"):
         prompt = f"""
 You are an expert meeting assistant.
 
-Analyze the meeting notes below and provide:
+Analyze the meeting notes below.
 
-## 📋 Meeting Summary
-Give a concise summary of the main discussion.
+Return ONLY valid JSON using exactly this structure:
 
-## ✅ Key Decisions
-List the important decisions that were made.
+{{
+  "summary": "A concise summary of the meeting",
+  "decisions": [
+    "Decision 1",
+    "Decision 2"
+  ],
+  "action_items": [
+    {{
+      "task": "Task description",
+      "person": "Person responsible",
+      "deadline": "Deadline"
+    }}
+  ],
+  "deadlines": [
+    "Important deadline or date"
+  ],
+  "people_responsible": [
+    "Person and their responsibility"
+  ]
+}}
 
-## 📝 Action Items
-List each task and the person responsible for it.
-
-## 📅 Important Deadlines
-List any deadlines or important dates mentioned.
-
-## 👤 People Responsible
-Identify people and the tasks assigned to them.
-
-Make the response clear, professional, and easy to read.
+If information is not available, use an empty list.
 
 Meeting notes:
 
@@ -84,15 +93,68 @@ Meeting notes:
                 contents=prompt
             )
 
-        result = response.text
+        try:
 
-        st.success("Meeting successfully summarized! 🎉")
+            result = json.loads(response.text)
 
-        st.markdown(result)
+            st.success("Meeting successfully summarized! 🎉")
 
-        st.download_button(
-            label="📥 Download Meeting Summary",
-            data=result,
-            file_name="meeting_summary.txt",
-            mime="text/plain"
-        )
+            st.subheader("📋 Meeting Summary")
+            st.write(result["summary"])
+
+            st.subheader("✅ Key Decisions")
+
+            for decision in result["decisions"]:
+                st.write(f"• {decision}")
+
+            st.subheader("📝 Action Items")
+
+            for item in result["action_items"]:
+                st.write(
+                    f"**{item['task']}** — "
+                    f"{item['person']} — "
+                    f"{item['deadline']}"
+                )
+
+            st.subheader("📅 Important Deadlines")
+
+            for deadline in result["deadlines"]:
+                st.write(f"• {deadline}")
+
+            st.subheader("👤 People Responsible")
+
+            for person in result["people_responsible"]:
+                st.write(f"• {person}")
+
+            download_text = f"""
+AI MEETING SUMMARY
+
+MEETING SUMMARY
+{result["summary"]}
+
+KEY DECISIONS
+{"".join("• " + d + chr(10) for d in result["decisions"])}
+
+ACTION ITEMS
+{"".join("• " + i["task"] + " — " + i["person"] + " — " + i["deadline"] + chr(10) for i in result["action_items"])}
+
+IMPORTANT DEADLINES
+{"".join("• " + d + chr(10) for d in result["deadlines"])}
+
+PEOPLE RESPONSIBLE
+{"".join("• " + p + chr(10) for p in result["people_responsible"])}
+"""
+
+            st.download_button(
+                label="📥 Download Meeting Summary",
+                data=download_text,
+                file_name="meeting_summary.txt",
+                mime="text/plain"
+            )
+
+        except json.JSONDecodeError:
+
+            st.error(
+                "The AI returned an unexpected format. "
+                "Please try summarizing again."
+            )
