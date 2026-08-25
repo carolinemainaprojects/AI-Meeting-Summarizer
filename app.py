@@ -109,23 +109,23 @@ Meeting notes:
 
             st.subheader("📝 Action Items")
 
-if result["action_items"]:
+            if result["action_items"]:
 
-    for item in result["action_items"]:
-        st.markdown(
-            f"""
-            **Task:** {item['task']}
+                for item in result["action_items"]:
+                    st.markdown(
+                        f"""
+                        **Task:** {item['task']}
 
-            **Responsible:** {item['person']}
+                        **Responsible:** {item['person']}
 
-            **Deadline:** {item['deadline']}
+                        **Deadline:** {item['deadline']}
 
-            ---
-            """
-        )
+                        ---
+                        """
+                    )
 
-else:
-    st.write("No action items were identified.")
+            else:
+                st.write("No action items were identified.")
 
             st.subheader("📅 Important Deadlines")
 
