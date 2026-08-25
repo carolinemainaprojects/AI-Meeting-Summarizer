@@ -2,6 +2,8 @@ import streamlit as st
 from google import genai
 from pypdf import PdfReader
 import json
+import csv
+import io
 
 st.set_page_config(
     page_title="AI Meeting Summarizer",
@@ -220,6 +222,8 @@ Meeting notes:
                 )
 
 
+            # Create TXT download
+
             download_text = f"""
 AI MEETING SUMMARY
 
@@ -246,9 +250,38 @@ PEOPLE RESPONSIBLE
                 mime="text/plain"
             )
 
+
+            # Create CSV download
+
+            csv_buffer = io.StringIO()
+
+            writer = csv.writer(csv_buffer)
+
+            writer.writerow(
+                ["Task", "Responsible", "Deadline"]
+            )
+
+            for item in result["action_items"]:
+
+                writer.writerow(
+                    [
+                        item["task"],
+                        item["person"],
+                        item["deadline"]
+                    ]
+                )
+
+            st.download_button(
+                label="📊 Download Action Items as CSV",
+                data=csv_buffer.getvalue(),
+                file_name="meeting_action_items.csv",
+                mime="text/csv"
+            )
+
+
         except json.JSONDecodeError:
 
             st.error(
                 "The AI returned an unexpected format. "
                 "Please try summarizing again."
-            )
+                        )
