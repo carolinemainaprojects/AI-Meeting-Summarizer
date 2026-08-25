@@ -23,16 +23,23 @@ st.markdown(
 st.divider()
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
+st.subheader("📥 Add Your Meeting")
+
 uploaded_file = st.file_uploader(
-    "📎 Upload a meeting transcript",
-    type=["pdf", "txt"]
+    "Upload a meeting transcript",
+    type=["pdf", "txt"],
+    help="Supported formats: PDF and TXT"
 )
 
+st.write("**Or paste your meeting notes below:**")
+
 meeting_notes = st.text_area(
-    "Or paste your meeting notes here:",
+    "Meeting notes",
     height=250,
-    placeholder="Paste your meeting notes here..."
+    placeholder="Example: Caroline will prepare the report by Friday..."
 )
+
+
 
 file_text = ""
 
