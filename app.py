@@ -125,25 +125,22 @@ Meeting notes:
                 st.write(f"• {decision}")
 
             st.subheader("📝 Action Items")
+st.subheader("📝 Action Items")
 
-            if result["action_items"]:
+if result["action_items"]:
 
-                for item in result["action_items"]:
-                    st.markdown(
-                        f"""
-                        **Task:** {item['task']}
+    for number, item in enumerate(result["action_items"], start=1):
 
-                        **Responsible:** {item['person']}
+        with st.container(border=True):
 
-                        **Deadline:** {item['deadline']}
+            st.markdown(f"### Task {number}")
 
-                        ---
-                        """
-                    )
+            st.write(f"**Task:** {item['task']}")
+            st.write(f"**👤 Responsible:** {item['person']}")
+            st.write(f"**📅 Deadline:** {item['deadline']}")
 
-            else:
-                st.write("No action items were identified.")
-
+else:
+    st.info("No action items were identified.")
             st.subheader("📅 Important Deadlines")
 
             for deadline in result["deadlines"]:
