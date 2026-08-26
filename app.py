@@ -26,7 +26,17 @@ st.markdown(
 st.divider()
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+google_credentials = Credentials.from_service_account_info(
+    json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT"]),
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+)
 
+google_client = gspread.authorize(google_credentials)
+
+sheet = google_client.open("AI Meeting Action Items").sheet1
 st.subheader("📥 Add Your Meeting")
 
 uploaded_file = st.file_uploader(
