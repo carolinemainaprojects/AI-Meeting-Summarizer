@@ -161,7 +161,6 @@ Meeting notes:
 
                     st.write(f"• {decision}")
 
-  
          else:
 
                 st.info("No key decisions were identified.")
