@@ -155,16 +155,11 @@ Meeting notes:
 
             st.subheader("✅ Key Decisions")
 
-            if result["decisions"]:
-
-                for decision in result["decisions"]:
-
-                    st.write(f"• {decision}")
-
-         else:
-
-                st.info("No key decisions were identified.")
-
+                if result["decisions"]:
+        for decision in result["decisions"]:
+            st.write(f"• {decision}")
+    else:
+        st.info("No key decisions were identified.")
 
             st.subheader("📝 Action Items")
 
