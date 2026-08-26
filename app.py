@@ -177,7 +177,7 @@ Meeting notes:
                         st.write(
                             f"**Task:** {item['task']}"
                         )
-                    st.write(
+                        st.write(
                         f"**Task:** {item['task']}"
                     )
                         st.write(
