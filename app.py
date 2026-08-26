@@ -3,7 +3,8 @@ from google import genai
 from pypdf import PdfReader
 import json
 import csv
-import io
+import ioimport gspread
+from google.oauth2.service_account import Credentials
 
 st.set_page_config(
     page_title="AI Meeting Summarizer",
