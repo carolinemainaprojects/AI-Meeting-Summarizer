@@ -37,8 +37,11 @@ google_credentials = Credentials.from_service_account_info(
 )
 
 google_client = gspread.authorize(google_credentials)
-
-sheet = google_client.open("AI Meeting Action Items").sheet1
+try:
+    sheet = google_client.open("AI Meeting Action Items").sheet1
+except Exception as e:
+    st.error(f"Google Sheets connection failed: {e}")
+    st.stop()
 st.subheader("📥 Add Your Meeting")
 
 uploaded_file = st.file_uploader(
