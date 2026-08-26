@@ -26,6 +26,7 @@ st.markdown(
 st.divider()
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+
 google_credentials = Credentials.from_service_account_info(
     json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT"]),
     scopes=[
