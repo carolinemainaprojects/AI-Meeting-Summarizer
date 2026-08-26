@@ -241,7 +241,7 @@ Meeting notes:
                         f"• {person}"
                     )
 
-            else:
+                  else:
 
                 st.info(
                     "No responsible people were identified."
