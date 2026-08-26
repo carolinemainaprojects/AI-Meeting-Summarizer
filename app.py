@@ -161,6 +161,7 @@ Meeting notes:
 
                     st.write(f"• {decision}")
 
+  
          else:
 
                 st.info("No key decisions were identified.")
@@ -241,7 +242,7 @@ Meeting notes:
                         f"• {person}"
                     )
 
-                  else:
+            else:
 
                 st.info(
                     "No responsible people were identified."
@@ -310,4 +311,4 @@ PEOPLE RESPONSIBLE
             st.error(
                 "The AI returned an unexpected format. "
                 "Please try summarizing again."
-                        )
+)
