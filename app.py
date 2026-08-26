@@ -149,37 +149,34 @@ Meeting notes:
                 "Meeting successfully summarized! 🎉"
             )
 
-            st.subheader("📋 Meeting Summary")
+            
+        st.subheader("📋 Meeting Summary")
 
-            st.write(result["summary"])
+        st.write(result["summary"])
 
-            st.subheader("✅ Key Decisions")
+        st.subheader("✅ Key Decisions")
 
-                if result["decisions"]:
-        for decision in result["decisions"]:
-            st.write(f"• {decision}")
-    else:
-        st.info("No key decisions were identified.")
+        if result["decisions"]:
+            for decision in result["decisions"]:
+                st.write(f"• {decision}")
+        else:
+            st.info("No key decisions were identified.")
 
-            st.subheader("📝 Action Items")
+        st.subheader("📝 Action Items")
 
-            if result["action_items"]:
+        if result["action_items"]:
+            for number, item in enumerate(
+                result["action_items"],
+                start=1
+            ):
+                with st.container(border=True):
+                    st.markdown(
+                        f"### Task {number}"
+                    )
 
-                for number, item in enumerate(
-                    result["action_items"],
-                    start=1
-                ):
-
-                    with st.container(border=True):
-
-                        st.markdown(
-                            f"### Task {number}"
-                        )
-
-                        st.write(
-                            f"**Task:** {item['task']}"
-                        )
-
+                    st.write(
+                        f"**Task:** {item['task']}"
+                    )
                         st.write(
                             f"**👤 Responsible:** "
                             f"{item['person']}"
