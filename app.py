@@ -161,7 +161,8 @@ Meeting notes:
 
                     st.write(f"• {decision}")
 
-            else:
+  
+         else:
 
                 st.info("No key decisions were identified.")
 
@@ -200,6 +201,16 @@ Meeting notes:
                 st.info(
                     "No action items were identified."
                 )
+                            # Save action items to Google Sheets
+            if result["action_items"]:
+                for item in result["action_items"]:
+                    sheet.append_row([
+                        item["task"],
+                        item["person"],
+                        item["deadline"]
+                    ])
+
+                st.success("✅ Action items saved to Google Sheets!")
 
 
             st.subheader("📅 Important Deadlines")
