@@ -150,7 +150,7 @@ Meeting notes:
             )
 
             
-                    st.subheader("📋 Meeting Summary")
+            st.subheader("📋 Meeting Summary")
 
             st.write(result["summary"])
 
