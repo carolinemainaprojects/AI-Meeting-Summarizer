@@ -172,7 +172,9 @@ Possible improvements include:
 AI Automation & Generative AI Projects
 
 GitHub: `carolinemainaprojects`
-LinkedIn: Caroline Maina
+
+[Caroline Maina on LinkedIn](https://www.linkedin.com/in/caroline-maina-480b74430)
+
 ```
 ```
 # AI-Meeting-Summarizer
