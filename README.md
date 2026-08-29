@@ -89,7 +89,9 @@ The marketing team discussed the upcoming campaign launch and assigned responsib
 
 * Sarah → Prepare social media content by Friday
 * John → Finalize advertising budget
+## 📸 Application Screenshot
 
+![AI Meeting Summarizer](Screenshot_2026-08-30-00-23-25-22_40deb401b9ffe8e1df2f1cc5ba480b12.jpg)
 ## 🛠️ Technologies
 
 * Python
