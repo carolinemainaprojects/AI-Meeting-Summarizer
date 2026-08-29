@@ -161,6 +161,9 @@ Possible improvements include:
 * Meeting sentiment analysis
 * Automatic task assignment
 * Slack notifications
+## 🚀 Live Demo
+
+[Try the AI Meeting Summarizer](https://ai-meeting-summarizer-nfqkeqvc8rbgjvyjqxxfyz.streamlit.app/)
 
 ## 👩🏽‍💻 Author
 
@@ -169,7 +172,7 @@ Possible improvements include:
 AI Automation & Generative AI Projects
 
 GitHub: `carolinemainaprojects`
-
+LinkedIn: Caroline Maina
 ```
 ```
 # AI-Meeting-Summarizer
